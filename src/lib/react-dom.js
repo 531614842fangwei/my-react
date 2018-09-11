@@ -9,7 +9,12 @@ const render = (element, container) => {
   ) {
     container.removeChild(container.firstChild)
   }
-  container.appendChild(new element().render())
+  const instance = new element()
+  container.appendChild(instance.render())
+  instance.onStateChange = (oldEl, newEl) => {
+    container.insertBefore(newEl, oldEl) // 插入新的元素
+    container.removeChild(oldEl) // 删除旧的元素
+  }
 }
 
 export default { render }
