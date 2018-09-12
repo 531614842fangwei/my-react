@@ -10,7 +10,7 @@ const render = (element, container) => {
     container.removeChild(container.firstChild)
   }
   const instance = new element()
-  container.appendChild(instance.render())
+  container.appendChild(instance._renderDom())
   instance.onStateChange = (oldEl, newEl) => {
     container.insertBefore(newEl, oldEl) // 插入新的元素
     container.removeChild(oldEl) // 删除旧的元素

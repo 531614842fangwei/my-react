@@ -1,20 +1,21 @@
 import React from '../lib/react'
-const { createElement } = React
-class App {
+const { createElement, Component } = React
+class App extends Component {
   constructor() {
+    super()
     this.state = {
       status: false // 默认不是赞赏状态
     }
   }
   // 在setState中设置数据，并且调用render来更新元素
-  setState(state) {
-    const oldEle = this.ele
-    this.state = state
-    this.ele = this.render()
-    if (this.onStateChange) {
-      this.onStateChange(oldEle, this.ele)
-    }
-  }
+  // setState(state) {
+  //   const oldEle = this.ele
+  //   this.state = state
+  //   this.ele = this.render()
+  //   if (this.onStateChange) {
+  //     this.onStateChange(oldEle, this.ele)
+  //   }
+  // }
   // setText中使用了dom操作，与我们想要的不符
   // setText(text) {
   //   const likeText = document.querySelector('.like-text')
@@ -22,6 +23,7 @@ class App {
   // }
   render() {
     const currentStatus = this.state.status
+    // 实际使用中应该用JSX来实现，但是JSX我手写实现不了
     const dom = createElement(
       'button', // tag
       {
@@ -37,8 +39,7 @@ class App {
       ), // children
       createElement('span', { className: 'like-text' }, '👍')
     )
-    this.ele = dom
-    return this.ele
+    return dom
   }
 }
 export default App
