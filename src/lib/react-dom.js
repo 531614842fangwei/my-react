@@ -10,11 +10,36 @@ const render = (element, container) => {
     container.removeChild(container.firstChild)
   }
   const instance = new element()
-  container.appendChild(instance._renderDom())
+  container.appendChild(_renderDom(instance._renderDom()))
   instance.onStateChange = (oldEl, newEl) => {
-    container.insertBefore(newEl, oldEl) // 插入新的元素
-    container.removeChild(oldEl) // 删除旧的元素
+    // TODO 在添加之前,加入diff算法
+    // 暂时暴力移除
+    while (
+      container.hasChildNodes() //当div下还存在子节点时 循环继续
+    ) {
+      container.removeChild(container.firstChild)
+    }
+    container.append(_renderDom(newEl)) // 插入新的元素
   }
+}
+
+const _renderDom = ({ tag, props, children }) => {
+  const dom = document.createElement(tag)
+  for (const key in props) {
+    if (props.hasOwnProperty(key)) {
+      dom[key] = props[key]
+    }
+  }
+  if (children && children.length) {
+    children.forEach(item => {
+      if (typeof item === 'string') {
+        dom.innerHTML = item
+      } else {
+        dom.appendChild(_renderDom(item))
+      }
+    })
+  }
+  return dom
 }
 
 export default { render }

@@ -3,24 +3,14 @@
  * @param { string } tag 标签可以是字符串也可以是方法
  * @param { object } props 元素的属性
  * @param { Element } children 子元素
+ * 创建reactElement,这个地方其实不应该写任何跟dom操作相关的东西，仅仅是js对象的创建
  */
 const createElement = (tag, props, ...children) => {
-  const dom = document.createElement(tag)
-  for (const key in props) {
-    if (props.hasOwnProperty(key)) {
-      dom[key] = props[key]
-    }
-  }
-  if (children && children.length) {
-    children.forEach(item => {
-      if (typeof item === 'string') {
-        dom.innerHTML = item
-      } else {
-        dom.appendChild(item)
-      }
-    })
-  }
-  return dom
+  const reactNode = {}
+  reactNode.tag = tag
+  reactNode.props = props
+  reactNode.children = children
+  return reactNode
 }
 
 //封装出共用的component
