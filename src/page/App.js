@@ -1,4 +1,6 @@
 import React from '../lib/react'
+import Button from '../component/button'
+
 const { createElement, Component } = React
 class App extends Component {
   constructor() {
@@ -25,7 +27,7 @@ class App extends Component {
     const currentStatus = this.state.status
     // 实际使用中应该用JSX来实现，但是JSX我手写实现不了
     const dom = createElement(
-      'button', // tag
+      Button, // tag
       {
         id: 'like-btn',
         onclick: () => {

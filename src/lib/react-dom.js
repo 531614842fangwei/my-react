@@ -24,7 +24,12 @@ const render = (element, container) => {
 }
 
 const _renderDom = ({ tag, props, children }) => {
-  const dom = document.createElement(tag)
+  let dom = null
+  if (typeof tag === 'string') {
+    dom = document.createElement(tag)
+  } else if (typeof tag === 'function') {
+    dom = _renderDom(new tag()._renderDom())
+  }
   for (const key in props) {
     if (props.hasOwnProperty(key)) {
       dom[key] = props[key]
